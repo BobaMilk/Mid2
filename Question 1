@@ -1,0 +1,50 @@
+# Question 1
+# Mila Kuang
+# Implement a program which multiplies a user input by 17 using only bit shift operations and addition.  Check to see if your program is correct by using the mult and mflo operators.
+# Your program should include a proper and useful prompt for input, and print the results in a meaningful manner.
+
+.text
+main:
+	# Get integer input
+	li $v0, 4
+	la $a0, intinput
+	syscall
+	
+	li $v0, 5
+	syscall
+	move $t1, $v0
+	
+	# Shift 4 times then add once
+	sll $s0, $t1, 4
+	add $s0, $t1, $s0
+	
+	# Print out shift result
+	li $v0, 4
+	la $a0, shiftresult
+	syscall
+	
+	li $v0, 1
+	move $a0, $s0
+	syscall
+	
+	# Testing with the mult function
+	li $t2, 17
+	mult $t1, $t2
+	mflo $s1
+	
+	# Print out result
+	li $v0, 4
+	la $a0, multresult
+	syscall
+	
+	li $v0, 1
+	move $a0, $s1
+	syscall
+	 
+	# End Program
+	li $v0, 10
+	syscall
+.data
+intinput: .asciiz "Please enter an int: "
+shiftresult: .asciiz "\nShift result: "
+multresult: .asciiz "\nMult result: "
