@@ -1,0 +1,124 @@
+# Question 2
+# Mila Kuang
+# Please compute the surface area of a pyramid.  Your program should ask the user for the necessary dimensions 
+# and display the surface area of the pyramid using approrpiate prompts for input and appropriate statements for output.
+# base: 6x6
+# height: 4 
+# Total surface area would be: 36 (base) + 3 x 12 (each side) = 72.
+.text
+main:
+	# Prompt for base
+	li $v0, 4
+	la $a0, enterbase
+	syscall
+	
+	li $v0, 5
+	syscall
+	move $t1, $v0
+	
+	# Prompt for height
+	li $v0, 4
+	la $a0, enterheight
+	syscall
+	
+	li $v0, 5
+	syscall
+	move $t2, $v0
+	
+	# Print out base
+	li $v0, 4
+	la $a0, base
+	syscall
+	
+	li $v0, 1
+	move $a0, $t1
+	syscall
+	
+	li $v0, 4
+	la $a0, x
+	syscall
+	
+	li $v0, 1
+	move $a0, $t1
+	syscall
+	
+	# Print out height
+	li $v0, 4
+	la $a0, height
+	syscall
+	
+	li $v0, 1
+	move $a0, $t2
+	syscall
+	
+	# Calculate total
+	mult $t1, $t1
+	mflo $s0
+	
+	# The "12"
+	li $t3, 2
+	mult $t1, $t3
+	mflo $s1
+	
+	# Include the height
+	mult $t2, $s1
+	mflo $s2
+	
+	add $s3, $s0, $s2
+	
+	# Print the total
+	li $v0, 4
+	la $a0, total
+	syscall
+	
+	li $v0, 1
+	move $a0, $s0
+	syscall
+	
+	li $v0, 4
+	la $a0, base1
+	syscall
+	
+	li $v0, 4
+	la $a0, plus
+	syscall
+	
+	li $v0, 1
+	move $a0, $t2
+	syscall
+	
+	li $v0, 4
+	la $a0, xspace
+	syscall
+	
+	li $v0, 1
+	move $a0, $s1
+	syscall
+	
+	li $v0, 4
+	la $a0, eachside
+	syscall
+	
+	li $v0, 1
+	move $a0, $s3
+	syscall
+	
+	li $v0, 4
+	la $a0, period
+	syscall
+	
+	# End program
+	li $v0, 10
+	syscall
+.data
+enterbase: .asciiz "Please enter the base: "
+enterheight: .asciiz "\nPlease enter the height: "
+base: .asciiz "\nbase: "
+base1: .asciiz " (base) "
+height: .asciiz "\n\nheight: "
+total: .asciiz "\n\nTotal surface area would be: "
+x: .asciiz "x"
+xspace: .asciiz " x "
+plus: .asciiz "+ "
+eachside: .asciiz " (each side) = "
+period: .asciiz ".\n"
